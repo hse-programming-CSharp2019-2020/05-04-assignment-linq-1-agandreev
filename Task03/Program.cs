@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,36 +55,72 @@ namespace Task03
     {
         static void Main(string[] args)
         {
-            int N
+            int N;
             List<ComputerInfo> computerInfoList = new List<ComputerInfo>();
             try
             {
-                N = 
+                N = int.Parse(Console.ReadLine());
                 
                 for (int i = 0; i < N; i++)
                 {
-                    
+                    string[] arguments = Console.ReadLine().Split();
+                    computerInfoList.Add(new ComputerInfo
+                    {
+                        Owner = arguments[0],
+                        Year = int.Parse(arguments[1]),
+                        ComputerManufacturer = (Manufacturer)int.Parse(arguments[2])
+                    });
                 }
-            }
-           
 
-            // выполните сортировку одним выражением
-            var computerInfoQuery = from 
+                // выполните сортировку одним выражением
+                var computerInfoQuery = from item in computerInfoList
+                                        orderby item.Owner descending,
+                                        item.ComputerManufacturer.ToString(),
+                                        item.Year descending
+                                        select item;
+                          
 
             PrintCollectionInOneLine(computerInfoQuery);
 
             Console.WriteLine();
 
             // выполните сортировку одним выражением
-            var computerInfoMethods = computerInfoList.
+            //var computerInfoMethods = computerInfoList.
 
-            PrintCollectionInOneLine(computerInfoMethods);
-            
+            PrintCollectionInOneLine(computerInfoQuery);
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception");
+            }
+            Console.ReadKey();
         }
 
         // выведите элементы коллекции на экран с помощью кода, состоящего из одной линии (должна быть одна точка с запятой)
         public static void PrintCollectionInOneLine(IEnumerable<ComputerInfo> collection)
         {
+            Console.WriteLine(String.Join(Environment.NewLine, collection.
+                    Select(p => p.ToString()).ToArray()));
         }
     }
 
@@ -92,6 +129,20 @@ namespace Task03
     {
         public string Owner { get; set; }
         public Manufacturer ComputerManufacturer { get; set; }
-        
+
+        public int Year { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Owner}: {ComputerManufacturer} [{Year}]";
+        }
+    }
+
+    enum Manufacturer
+    {
+        Dell = 0,
+        Asus = 1,
+        Apple = 2,
+        Microsoft = 3
     }
 }

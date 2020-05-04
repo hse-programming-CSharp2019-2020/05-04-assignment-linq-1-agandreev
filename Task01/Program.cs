@@ -34,7 +34,7 @@ namespace Task01
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             RunTesk01();
         }
@@ -45,28 +45,50 @@ namespace Task01
             try
             {
                 // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
-                arr = 
-            }
-            
-            // использовать синтаксис запросов!
-            IEnumerable<int> arrQuery = from 
+                arr = Console.ReadLine().Split(
+                    new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(c => int.Parse(c)).ToArray();
 
-            // использовать синтаксис методов!
-            IEnumerable<int> arrMethod = arr.
+                // использовать синтаксис запросов!
+                IEnumerable<int> arrQuery = from num in arr
+                                            where ((num % 2 == 0) || (num < 0))
+                                            select num;
 
-            try
-            {
+                // использовать синтаксис методов!
+                IEnumerable<int> arrMethod = arr.Where(x => (x % 2 == 0) || (x < 0)).Select(x => x);
+
                 PrintEnumerableCollection<int>(arrQuery, ":");
                 PrintEnumerableCollection<int>(arrMethod, "*");
             }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception");
+            }
+            Console.ReadLine();
         }
 
         // Попробуйте осуществить вывод элементов коллекции с учетом разделителя, записав это ОДНИМ ВЫРАЖЕНИЕМ.
         // P.S. Есть два способа, оставьте тот, в котором применяется LINQ...
         public static void PrintEnumerableCollection<T>(IEnumerable<T> collection, string separator)
         {
-           
-           
+            string result = String.Join(separator, collection.Select(p => p.ToString()).ToArray());
+            Console.WriteLine(result);           
         }
     }
 }

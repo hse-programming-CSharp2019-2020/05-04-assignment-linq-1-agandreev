@@ -42,25 +42,50 @@ namespace Task02
             try
             {
                 // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
-                arr = 
-            }
-            
-            
-            var filteredCollection = arr.
-           
-            try
-            {
-                
+                arr = Console.ReadLine().Split(
+                    new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(c => int.Parse(c)).ToArray();
+                if (arr.Length == 0)
+                {
+                    throw new InvalidOperationException();
+                }
+                var filteredCollection = arr.TakeWhile(c => c != 0).ToArray();
+
                 // использовать статическую форму вызова метода подсчета среднего
-                double averageUsingStaticForm = 
+                double averageUsingStaticForm = filteredCollection.Select(n => n*n).ToArray().Average();
                 // использовать объектную форму вызова метода подсчета среднего
-                double averageUsingInstanceForm = 
-
-
+                double averageUsingInstanceForm = filteredCollection.Select(n => n * n).ToArray().Average();
+                Console.WriteLine($"{averageUsingStaticForm:F3}");
+                Console.WriteLine($"{averageUsingInstanceForm:F3}");
                 // вывести элементы коллекции в одну строку
-                filteredCollection.
+                Console.WriteLine(String.Join(" ", filteredCollection.
+                    Select(p => p.ToString()).ToArray()));
             }
-          
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception");
+            }
+            Console.ReadKey();
         }
         
     }

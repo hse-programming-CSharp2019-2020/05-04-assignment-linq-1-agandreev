@@ -60,6 +60,10 @@ namespace Task01
                 PrintEnumerableCollection<int>(arrQuery, ":");
                 PrintEnumerableCollection<int>(arrMethod, "*");
             }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+            }
             catch (ArgumentNullException)
             {
                 Console.WriteLine("ArgumentNullException");

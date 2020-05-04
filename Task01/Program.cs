@@ -49,6 +49,10 @@ namespace Task01
                     new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(c => int.Parse(c)).ToArray();
 
+                if (arr.Length == 0)
+                {
+                    throw new InvalidOperationException();
+                }
                 // использовать синтаксис запросов!
                 IEnumerable<int> arrQuery = from num in arr
                                             where ((num % 2 == 0) || (num < 0))
